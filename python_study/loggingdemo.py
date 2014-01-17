@@ -8,6 +8,7 @@
 
 import logging
 import logging.handlers
+import logging.config
 
 def loggertest():
 	LOG_FILE = 'tst.log'
@@ -42,8 +43,37 @@ def main():
 	logger.fatal("fatal msg")
 	logger.critical("critical msg")
 
+def logconfig():
+	logging.config.fileConfig('logging.conf')
+	
+	logger = logging.getLogger('tst')
 
+	logger.debug('debug msg')
+	logger.info('info msg')
+	logger.warn('warn msg')
+	logger.error('error msg')
+	logger.critical('critical msg')
+
+def logMultiModule():
+	logging.config.fileConfig('logging.conf')
+
+	#root
+	logger_root = logging.getLogger('root')
+	logger_root.debug('debug root')
+
+	#main
+	logger_main = logging.getLogger('main')
+	logger_main.info('info main')
+
+	logger_main.info('start import module \'logModDemo\'...')
+	import logModDemo
+	logger_main.debug('test mod.testLogger()')
+	logModDemo.testLogger()
+
+	logger_root.info('the end!')
 
 if __name__ == "__main__":
 #	loggertest()
-	main()
+#	main()
+#	logconfig()
+	logMultiModule()
