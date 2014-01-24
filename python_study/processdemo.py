@@ -53,3 +53,4 @@ for process in record:
 	print(process)
 	process.join()
 
+print 'end'
